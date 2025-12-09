@@ -1,26 +1,20 @@
-# TASK 4: JOB TITLE NORMALIZER
-# Infosys Springboard - Skill Gap AI Project
-
 print("----- JOB TITLE NORMALIZER -----")
 
-# Take input from user
-job_title = input("Enter job title: ").strip().lower()
+job_title = input("Enter Job Title: ")
 
-# Dictionary of job title variations
-job_title_mapping = {
-    "software engineer": ["software engineer", "sde", "developer", "programmer"],
-    "data scientist": ["data scientist", "data analyst", "ml engineer"],
-    "web developer": ["web developer", "frontend developer", "backend developer", "full stack developer"],
-    "tester": ["tester", "qa engineer", "test engineer"]
+job_title = job_title.lower().strip()
+
+normalized_titles = {
+    "sde": "software engineer",
+    "software developer": "software engineer",
+    "frontend dev": "frontend developer",
+    "backend dev": "backend developer",
+    "data scientist": "data scientist",
+    "ml engineer": "machine learning engineer",
+    "ai engineer": "artificial intelligence engineer"
 }
 
-normalized_title = "Unknown Job Title"
-
-# Normalize the job title
-for standard_title, variations in job_title_mapping.items():
-    if job_title in variations:
-        normalized_title = standard_title
-        break
-
-# Display result
-print("\nNormalized Job Title:", normalized_title)
+if job_title in normalized_titles:
+    print("Normalized Job Title:", normalized_titles[job_title])
+else:
+    print("Normalized Job Title:", job_title)
