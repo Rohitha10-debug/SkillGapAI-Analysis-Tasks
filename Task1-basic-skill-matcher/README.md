@@ -5,17 +5,17 @@ To compare resume skills with job required skills and identify:
 - Matched skills
 - Missing skills
 
-This task helps in analyzing the skill gap for a given job role.
+This helps in understanding the skill gap for a particular job role.
 
 ---
 
-## 📄 Problem Description
-The program:
-1. Uses a sample job description from the internet.
-2. Uses sample resume skills.
-3. Takes job required skills as user input.
+## 📄 Description
+This Python program:
+1. Uses a sample job description.
+2. Uses predefined resume skills.
+3. Accepts job required skills as user input.
 4. Cleans both skill lists.
-5. Compares both lists.
+5. Compares them.
 6. Displays matched and missing skills.
 
 ---
@@ -25,7 +25,8 @@ The program:
 
 ---
 
-## ▶️ How to Run the Program
+## ▶️ How to Run
 ```bash
 python task1_basic_skill_matcher.py
+
 
