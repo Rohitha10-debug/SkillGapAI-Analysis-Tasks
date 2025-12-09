@@ -28,3 +28,4 @@ for skill in skills:
         break
 
 print("\nPredicted Resume Category:", category)
+
