@@ -3,15 +3,13 @@
 
 print("----- TECH STACK COUNTER -----")
 
-# Sample resume / project description text
 text = """
 Rohitha has worked with Python, Java, HTML, CSS, JavaScript and React.
-She has also used SQL and MongoDB for databases and basic AWS services
-for deployment. Her projects include web apps and simple machine learning models.
+She has also used SQL and MongoDB for databases and basic AWS services.
 """
 
-# Convert text to lowercase for case-insensitive search
 text_lower = text.lower()
+
 
 # List of technologies to count
 tech_stack = [
