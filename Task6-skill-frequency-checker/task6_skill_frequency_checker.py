@@ -14,7 +14,8 @@ projects using Python, HTML, CSS and basic SQL. She is also learning data analys
 resume_text_lower = resume_text.lower()
 
 # Take skills to check from the user
-skills_input = input("Enter skills to check (comma separated): ")
+skills_input = input("Enter skills (comma separated): ")
+
 
 # Convert input string to a clean list
 skills = [skill.strip().lower() for skill in skills_input.split(",") if skill.strip() != ""]
