@@ -1,4 +1,4 @@
-# 🚀 SkillGapAI – Resume & Job Description Analysis (Python Mini Projects)
+# 🚀 SkillGapAI – Resume & Job Description Analysis (Python Mini Project)
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
