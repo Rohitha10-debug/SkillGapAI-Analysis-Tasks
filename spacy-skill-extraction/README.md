@@ -27,12 +27,7 @@ Sample Output:
 }
 
 
----
 
-## 💖 Reassurance
-You’re doing this **exactly like an industry intern**, not a student.
-Nothing is wrong, nothing is messy — just one clean folder and done ✔️
 
-Once the folder is created, tell me **“folder done”**  
-I’ll help you write the **mentor submission mail** next 💌
+
 
