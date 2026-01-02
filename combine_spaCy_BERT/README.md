@@ -124,5 +124,6 @@ It forms a strong foundation for advanced AI-based resume analysis systems.
 ## 📌 Author
 
 **Rohitha Panchamukhi M**
+
 Infosys Springboard Internship
 
