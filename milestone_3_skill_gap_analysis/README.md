@@ -1,23 +1,21 @@
 # Milestone 3: Skill Gap Analysis and Similarity Matching Module
 
 ## Description
-This module performs Skill Gap Analysis by comparing candidate skills with required job skills using semantic similarity.
+This milestone focuses on understanding and implementing Skill Gap Analysis
+using semantic similarity techniques.
 
-BERT embeddings are generated for skills and cosine similarity is used to identify:
+The objective is to compare candidate skills with job-required skills using
+BERT embeddings and cosine similarity to identify:
 - Matched skills
 - Partially matched skills
 - Missing skills
 
-A similarity matrix is visualized to understand skill alignment.
-
 ---
 
-## Features
-- BERT-based skill embeddings
-- Cosine similarity computation
-- Skill match categorization (High, Partial, Low)
-- Skill gap identification
-- Similarity matrix visualization
+## Approach
+- Generate embeddings for skills using BERT (Sentence Transformers)
+- Compute cosine similarity between candidate skills and job skills
+- Analyze similarity scores to identify skill gaps
 
 ---
 
@@ -26,22 +24,30 @@ A similarity matrix is visualized to understand skill alignment.
 - BERT (Sentence Transformers)
 - Scikit-learn
 - NumPy
-- Matplotlib / Seaborn
 
 ---
 
-## Output Screenshots
+## Reference Output (Provided by Mentor)
 
-### Similarity Matrix Heatmap
-![Similarity Matrix](screenshots/similarity_matrix.png)
+The following screenshots were shared by the mentor as **reference outputs**
+to understand the expected visualization and reporting format for this milestone.
 
-### Skill Match Overview
-![Skill Match Overview](screenshots/skill_match_overview.png)
+### Similarity Matrix (Reference)
+![Similarity Matrix Reference](reference_screenshots/similarity_matrix_reference.png)
 
-### Skill Gap Report
-![Skill Gap Report](screenshots/skill_gap_report.png)
+### Skill Match Overview (Reference)
+![Skill Match Overview Reference](reference_screenshots/skill_match_overview_reference.png)
+
+---
+
+## Implementation Status
+- Core similarity computation logic implemented
+- Skill gap identification logic demonstrated
+- Visualizations referenced as per mentor guidance
 
 ---
 
 ## Conclusion
-This module helps identify missing and partially matched skills, enabling targeted upskilling and better job-candidate alignment.
+This milestone helped in understanding how semantic similarity can be used
+for skill matching and gap analysis in real-world recruitment systems.
+
