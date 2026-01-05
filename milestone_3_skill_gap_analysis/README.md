@@ -21,7 +21,8 @@ and job-required skills using semantic embeddings and cosine similarity.
 ## Output
 
 ### Skill Similarity Matrix Heatmap
-![Skill Similarity Matrix](similarity_matrix.png)
+![Skill Similarity Matrix](screenshots/Screenshot%202026-01-05%20194643.png)
+
 
 ## Result
 The system successfully identifies skill alignment and gaps, helping in
