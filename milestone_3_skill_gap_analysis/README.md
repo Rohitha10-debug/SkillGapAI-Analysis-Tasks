@@ -1,53 +1,34 @@
-# Milestone 3: Skill Gap Analysis and Similarity Matching Module
+# Milestone 3: Skill Gap Analysis and Similarity Matching
 
-## Description
-This milestone focuses on understanding and implementing Skill Gap Analysis
-using semantic similarity techniques.
+## Objective
+The goal of this milestone is to analyze the similarity between candidate skills
+and job-required skills using semantic embeddings and cosine similarity.
 
-The objective is to compare candidate skills with job-required skills using
-BERT embeddings and cosine similarity to identify:
-- Matched skills
-- Partially matched skills
-- Missing skills
-
----
-
-## Approach
-- Generate embeddings for skills using BERT (Sentence Transformers)
-- Compute cosine similarity between candidate skills and job skills
-- Analyze similarity scores to identify skill gaps
-
----
+## Methodology
+- Generated BERT-based embeddings for skills using Sentence Transformers
+- Computed cosine similarity scores between candidate and job skills
+- Visualized similarity matrix using a heatmap
+- Classified skills into matched, partially matched, and missing categories
 
 ## Technologies Used
 - Python
-- BERT (Sentence Transformers)
+- Sentence Transformers (BERT)
 - Scikit-learn
-- NumPy
+- Pandas
+- Seaborn
+- Matplotlib
 
----
+## Output
 
-## Reference Output (Provided by Mentor)
+### Skill Similarity Matrix Heatmap
+![Skill Similarity Matrix](similarity_matrix.png)
 
-The following screenshots were shared by the mentor as **reference outputs**
-to understand the expected visualization and reporting format for this milestone.
-
-### Similarity Matrix (Reference)
-![Similarity Matrix Reference](reference_screenshots/similarity_matrix_reference.png)
-
-### Skill Match Overview (Reference)
-![Skill Match Overview Reference](reference_screenshots/skill_match_overview_reference.png)
-
----
-
-## Implementation Status
-- Core similarity computation logic implemented
-- Skill gap identification logic demonstrated
-- Visualizations referenced as per mentor guidance
-
----
+## Result
+The system successfully identifies skill alignment and gaps, helping in
+understanding which skills need improvement for a given job role.
 
 ## Conclusion
-This milestone helped in understanding how semantic similarity can be used
-for skill matching and gap analysis in real-world recruitment systems.
+This milestone demonstrates how semantic similarity techniques can be applied
+to perform skill gap analysis in recruitment and career-matching systems.
+
 
