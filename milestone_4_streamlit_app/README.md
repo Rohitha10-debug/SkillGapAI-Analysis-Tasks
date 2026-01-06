@@ -1,54 +1,78 @@
 # Milestone 4: Streamlit Skill Gap Analysis Dashboard
 
 ## Overview
-This milestone focuses on building a complete interactive Streamlit dashboard
-that performs end-to-end skill gap analysis between a candidate resume and a
-job description.
 
-The application allows users to upload documents, preview content, analyze
-skill matches, visualize results, and export reports.
+This milestone focuses on building a **complete interactive Streamlit dashboard** that performs **end-to-end skill gap analysis** between a candidate’s resume and a job description.
+
+The application allows users to upload documents, analyze skill alignment, visualize results, and export reports — all wrapped in a **calm, elegant lavender-themed UI**.
 
 ---
 
-## Features Implemented
+## Key Features
 
-### 1. Streamlit UI
-- Application title and short description
-- Sidebar navigation for user guidance
-
-### 2. File Upload
-- Upload Resume and Job Description
-- Supported formats: PDF, DOCX, TXT
-- Displays uploaded file previews (first 300 characters)
-
-### 3. Skill Gap Analysis
-- Predefined technical and soft skills list
+- Upload **Resume** and **Job Description** (PDF, DOCX, TXT)
+- Display uploaded file names
+- Preview first part of uploaded text
+- Skill extraction and matching using NLP
 - Skill match percentage using Streamlit metrics
-- Identifies matched skills and missing skills
-
-### 4. Visualization
-- Bar chart comparing matched vs missing skills
-- Table showing skills and their similarity scores
-
-### 5. Session State & Error Handling
-- Uses Streamlit session state to preserve analysis results
-- Handles empty uploads and unsupported formats gracefully
-
-### 6. Report Export
-- Allows users to download skill gap results as a CSV file
+- Visualization of **Matched vs Missing Skills**
+- Skill similarity table
+- Download skill gap report as CSV
+- Streamlit session state handling
+- Clean, pastel-themed user interface
 
 ---
 
-## Technologies Used
-- Python
-- Streamlit
-- Pandas
-- Matplotlib
+## Application Screenshots
+
+### 1️⃣ Dashboard Home
+![Dashboard Home](screenshots/Screenshot%202026-01-06%20220107.png)
 
 ---
 
-## How to Run the Application
+### 2️⃣ Resume & Job Description Upload
+![Upload Files](screenshots/Screenshot%202026-01-06%20220127.png)
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
+---
+
+### 3️⃣ Skill Gap Document Preview
+![Analysis Results](screenshots/Screenshot%202026-01-06%20220141.png)
+
+---
+
+### 4️⃣ Skill Match Percentage
+![Skill Match](screenshots/Screenshot%202026-01-06%20220153.png)
+
+---
+
+### 5️⃣ Visualization – Matched vs Missing Skills
+![Visualization](screenshots/Screenshot%202026-01-06%20220205.png)
+
+---
+
+### 6️⃣ Skill Similarity Table
+![Similarity Table](screenshots/Screenshot%202026-01-06%20220216.png)
+
+---
+
+### 7️⃣ Download Skill Gap Report
+![Download Skill Gap Report](screenshots/Screenshot%202026-01-06%20220230.png)
+
+
+---
+
+## Folder Structure
+
+```text
+milestone_4_streamlit_app/
+│
+├── app.py
+├── README.md
+└── screenshots/
+    ├── Screenshot 2026-01-06 220107.png
+    ├── Screenshot 2026-01-06 220127.png
+    ├── Screenshot 2026-01-06 220141.png
+    ├── Screenshot 2026-01-06 220153.png
+    ├── Screenshot 2026-01-06 220205.png
+    ├── Screenshot 2026-01-06 220216.png
+    └── Screenshot 2026-01-06 220230.png
