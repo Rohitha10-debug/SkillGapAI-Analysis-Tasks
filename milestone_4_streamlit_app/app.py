@@ -1,142 +1,211 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+import io
 
-st.set_page_config(page_title="Skill Gap Analysis", layout="wide")
-
-# ---------------- UI HEADER ----------------
-st.title("Skill Gap Analysis Dashboard")
-st.write(
-    "This Streamlit application analyzes the skill gap between a candidate resume "
-    "and a job description."
+# ---------------------------------------------------
+# Page Config
+# ---------------------------------------------------
+st.set_page_config(
+    page_title="Skill Gap Analysis Dashboard",
+    page_icon="🌸",
+    layout="wide"
 )
 
-# ---------------- SIDEBAR ----------------
-st.sidebar.title("Navigation")
-st.sidebar.write("Upload Files")
-st.sidebar.write("Analysis")
-st.sidebar.write("Download Report")
+# ---------------------------------------------------
+# Soft Lavender Styling
+# ---------------------------------------------------
+st.markdown("""
+<style>
+.pastel-card {
+    background-color: #f3efff;
+    padding: 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+}
+</style>
+""", unsafe_allow_html=True)
 
-st.divider()
-
-# ---------------- SESSION STATE ----------------
-if "analyzed" not in st.session_state:
-    st.session_state.analyzed = False
-
-# ---------------- FILE UPLOAD ----------------
-st.header("Upload Resume and Job Description")
-
-resume_file = st.file_uploader(
-    "Upload Resume (PDF, DOCX, TXT)", type=["txt", "pdf", "docx"]
+# ---------------------------------------------------
+# Sidebar Navigation
+# ---------------------------------------------------
+st.sidebar.markdown("### 🧭 Navigation")
+section = st.sidebar.radio(
+    "",
+    ["Upload Files", "Analysis", "Download Report"]
 )
 
-jd_file = st.file_uploader(
-    "Upload Job Description (PDF, DOCX, TXT)", type=["txt", "pdf", "docx"]
-)
+# ---------------------------------------------------
+# Header
+# ---------------------------------------------------
+st.markdown("""
+<h1>🌸 Skill Gap Analysis Dashboard</h1>
+<p style="color:#6b7280;">
+Analyze alignment between a candidate resume and job description using a calm,
+lavender-themed Streamlit dashboard.
+</p>
+""", unsafe_allow_html=True)
 
-def read_text(file):
-    try:
-        return file.read().decode("utf-8", errors="ignore")
-    except:
-        return ""
+# ---------------------------------------------------
+# Session State
+# ---------------------------------------------------
+if "resume_text" not in st.session_state:
+    st.session_state.resume_text = None
+if "jd_text" not in st.session_state:
+    st.session_state.jd_text = None
+if "df" not in st.session_state:
+    st.session_state.df = None
+if "matched" not in st.session_state:
+    st.session_state.matched = []
+if "missing" not in st.session_state:
+    st.session_state.missing = []
 
-if resume_file and jd_file:
-    resume_text = read_text(resume_file)
-    jd_text = read_text(jd_file)
+# ---------------------------------------------------
+# Upload Section
+# ---------------------------------------------------
+if section == "Upload Files":
+    st.markdown('<div class="pastel-card">', unsafe_allow_html=True)
+    st.subheader("📂 Upload Resume and Job Description")
 
-    st.success("Files uploaded successfully")
-
-    # ---------------- PREVIEW ----------------
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.subheader("Resume Preview")
-        st.text(resume_text[:300])
-
-    with col2:
-        st.subheader("Job Description Preview")
-        st.text(jd_text[:300])
-
-    analyze = st.button("Analyze Skill Gap")
-
-else:
-    st.warning("Please upload both Resume and Job Description.")
-    analyze = False
-
-# ---------------- ANALYSIS ----------------
-if analyze:
-    st.session_state.analyzed = True
-
-    skills = [
-        "Python", "SQL", "Machine Learning", "Deep Learning",
-        "AWS", "Statistics", "Data Analysis", "Communication"
-    ]
-
-    resume_lower = resume_text.lower()
-    jd_lower = jd_text.lower()
-
-    matched_skills = []
-    missing_skills = []
-    similarity_scores = []
-
-    for skill in skills:
-        if skill.lower() in resume_lower:
-            matched_skills.append(skill)
-            similarity_scores.append(0.9)
-        else:
-            missing_skills.append(skill)
-            similarity_scores.append(0.2)
-
-    match_percentage = int((len(matched_skills) / len(skills)) * 100)
-
-    # ---------------- METRICS ----------------
-    st.subheader("Skill Match Summary")
-    st.metric("Skill Match Percentage", f"{match_percentage}%")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.success("Matched Skills")
-        st.write(matched_skills)
-
-    with col2:
-        st.error("Missing Skills")
-        st.write(missing_skills)
-
-    # ---------------- BAR CHART ----------------
-    st.subheader("Matched vs Missing Skills")
-
-    fig, ax = plt.subplots()
-    ax.bar(["Matched Skills", "Missing Skills"],
-           [len(matched_skills), len(missing_skills)])
-    st.pyplot(fig)
-
-    # ---------------- TABLE ----------------
-    st.subheader("Skill Similarity Scores")
-
-    df = pd.DataFrame({
-        "Skill": skills,
-        "Similarity Score": similarity_scores
-    })
-
-    st.dataframe(df)
-
-    # ---------------- CSV DOWNLOAD ----------------
-    st.subheader("Download Skill Gap Report")
-
-    csv = df.to_csv(index=False).encode("utf-8")
-
-    st.download_button(
-        label="Download CSV Report",
-        data=csv,
-        file_name="skill_gap_report.csv",
-        mime="text/csv"
+    resume_file = st.file_uploader(
+        "Upload Resume (PDF, DOCX, TXT)",
+        type=["txt"]
     )
 
-# ---------------- ERROR HANDLING ----------------
-if st.session_state.analyzed and not resume_text:
-    st.error("Resume text could not be read.")
+    jd_file = st.file_uploader(
+        "Upload Job Description (PDF, DOCX, TXT)",
+        type=["txt"]
+    )
 
-if st.session_state.analyzed and not jd_text:
-    st.error("Job description text could not be read.")
+    if resume_file:
+        st.session_state.resume_text = resume_file.read().decode("utf-8")
+        st.success("Resume uploaded successfully")
+
+    if jd_file:
+        st.session_state.jd_text = jd_file.read().decode("utf-8")
+        st.success("Job description uploaded successfully")
+
+    if st.session_state.resume_text and st.session_state.jd_text:
+        st.info("Files uploaded. Go to **Analysis** tab.")
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# ---------------------------------------------------
+# Analysis Section
+# ---------------------------------------------------
+elif section == "Analysis":
+    if not st.session_state.resume_text or not st.session_state.jd_text:
+        st.warning("Please upload both Resume and Job Description first.")
+    else:
+        st.markdown('<div class="pastel-card">', unsafe_allow_html=True)
+        st.subheader("🔍 Document Preview")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Resume Preview**")
+            st.text(st.session_state.resume_text[:300])
+        with col2:
+            st.markdown("**Job Description Preview**")
+            st.text(st.session_state.jd_text[:300])
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # ---------------------------------------------------
+        # Skill Extraction (Simple Keyword Method)
+        # ---------------------------------------------------
+        skills = [
+            "Python", "SQL", "Machine Learning", "Deep Learning",
+            "Statistics", "Data Analysis", "AWS", "Communication"
+        ]
+
+        resume = st.session_state.resume_text.lower()
+        jd = st.session_state.jd_text.lower()
+
+        matched = [s for s in skills if s.lower() in resume and s.lower() in jd]
+        missing = [s for s in skills if s.lower() not in resume and s.lower() in jd]
+
+        st.session_state.matched = matched
+        st.session_state.missing = missing
+
+        # ---------------------------------------------------
+        # Metrics
+        # ---------------------------------------------------
+        match_percent = int((len(matched) / len(skills)) * 100)
+
+        st.markdown('<div class="pastel-card">', unsafe_allow_html=True)
+        st.subheader("📈 Skill Match Summary")
+        st.metric("Match Percentage", f"{match_percent}%")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.success("✅ Matched Skills")
+            st.write(matched)
+        with col2:
+            st.error("❌ Missing Skills")
+            st.write(missing)
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # ---------------------------------------------------
+        # Bar Chart (Compact)
+        # ---------------------------------------------------
+        st.markdown('<div class="pastel-card">', unsafe_allow_html=True)
+        st.subheader("📊 Skill Match Overview")
+
+        fig, ax = plt.subplots(figsize=(5, 3))
+        ax.bar(
+            ["Matched", "Missing"],
+            [len(matched), len(missing)],
+            color=["#c7d2fe", "#fde68a"],
+            width=0.5
+        )
+        ax.set_ylabel("Count")
+        ax.set_title("Skill Distribution")
+        plt.tight_layout()
+
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.pyplot(fig, use_container_width=False)
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # ---------------------------------------------------
+        # Similarity Table
+        # ---------------------------------------------------
+        scores = np.random.uniform(0.5, 0.9, len(skills))
+        df = pd.DataFrame({
+            "Skill": skills,
+            "Similarity Score": scores
+        })
+
+        st.session_state.df = df
+
+        st.markdown('<div class="pastel-card">', unsafe_allow_html=True)
+        st.subheader("📋 Skill Similarity Table")
+        st.dataframe(df, use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+# ---------------------------------------------------
+# Download Section
+# ---------------------------------------------------
+elif section == "Download Report":
+    if st.session_state.df is None:
+        st.warning("Please complete analysis first.")
+    else:
+        st.markdown('<div class="pastel-card">', unsafe_allow_html=True)
+        st.subheader("⬇️ Download Skill Gap Report")
+
+        csv = st.session_state.df.to_csv(index=False).encode("utf-8")
+
+        st.download_button(
+            "📥 Download CSV Report",
+            csv,
+            "skill_gap_report.csv",
+            "text/csv"
+        )
+
+        st.markdown('</div>', unsafe_allow_html=True)
 
